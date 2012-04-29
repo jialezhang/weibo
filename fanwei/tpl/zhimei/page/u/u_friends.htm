@@ -1,0 +1,87 @@
+<?php
+	$css_list[0]['url'][] = './tpl/css/tweetlist.css';
+	$css_list[0]['url'][] = './tpl/css/zone.css';
+	$js_list[0] = './tpl/js/zone.js';
+?>
+<!--{template inc/header}-->
+<div id="body" class="fm960">
+		<div class="homews_bd clearfix">
+			<div id="content" class="fl" style="width:960px;">
+			<!--{template inc/u/u_menu}-->
+            
+            <div id="maincolumn">
+				<div id="friend">
+					<h1>我关注的</h1>
+					<div class="ftag">
+						<ul class="cf">
+                        	<li class="current"><a href="{u u/friends uid=$home_uid}">双向关注</a>
+							<li><a href="{u u/follow uid=$home_uid}">{$_FANWE['home_user_names']['short']}的关注<span class="num"><em>{$home_user['follows']}</em></span></a></li>
+							<li><a href="{u u/fans uid=$home_uid}">{$_FANWE['home_user_names']['short']}的粉丝<span class="num"><em>{$home_user['fans']}</em></span></a></li>
+						</ul>
+					</div>
+					<div id="follow_no_user" class="fr_nocontent_tips" style="display:none;">
+						你还没有关注任何人，<a href="{u invite/index}">去邀请站外好友</a>来共同管理吧
+					</div>
+					<ul class="friendlist" id="jquery-friendlist">
+                    <!--{loop $user_list $follow_user}-->
+						<li class=" cf">
+                        	<!--{if $follow_user['share']}-->
+                            <div class="friendimg">
+                        	<!--{loop $follow_user['share'] $share}-->
+                            	
+                            	<a href="{$share['url']}"><!--{loop $share['img']['all'] $img}--><img src="{getImg $img['img'] 60 60}" width="60" height="60"><!--{/loop}--></a> 
+                                
+                            <!--{/loop}-->
+                            </div>
+                            <!--{/if}-->
+							<div class="uhead"><a href="{u u/index uid=$follow_user['uid']}"><img src="{avatar $follow_user['uid'] m 1}" width="60" height="60"></a></div>
+							<div class="uinfo f14 gray">
+                            	<a href="{u u/index uid=$follow_user['uid']}" class="blue">{$follow_user['user_name']}</a>
+								<div style="padding-top:12px">
+									<a class="buttonfollow unfriend-follow png" onclick="$.User_Follow({$follow_user['uid']},this,UpdateUserFollow)"  href="javascript:;">已关注</a>
+									<a class="unsend-mail" href="javascript:;" onclick="$.sendMail({$follow_user['uid']})"></a>
+								</div>
+							</div>
+						</li>
+                    <!--{/loop}-->
+					</ul>
+					<div class="pagination">
+						<!--{subtemplate inc/pages}-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+function MeUpdateUserFollow(obj,result)
+{
+	$(obj).parents('.PEOPLE_ID_BOX').slideUp("slow");
+}
+
+function UpdateUserFollow(obj,result)
+{
+	
+	if(result.status == 1)
+	{
+		
+		$(obj).removeClass("friend-follow").addClass("unfriend-follow").html("已关注");
+	}
+	else
+	{
+		$(obj).removeClass("unfriend-follow").addClass("friend-follow").html("关注");
+	}
+	
+}
+
+function DeleteUserFans(obj,result)
+{
+	var parent = $(obj).parent().parent();
+	if(result.status == 1)
+	{
+		$('.follow1',parent).hide();
+		$('.follow0',parent).show();
+	}
+}
+</script>
+<!--{template inc/footer}-->

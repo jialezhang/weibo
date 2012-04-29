@@ -1,0 +1,204 @@
+<?php
+	$css_list[0]['url'][] = './tpl/css/zone.css';
+	$js_list[0] = './tpl/js/zone.js';
+?>
+<!--{template inc/header}-->
+<div id="body" class="fm960">
+	<div class="homens_hd"></div>
+	<div class="homens_bd clearfix">
+		<div id="content" class="clearfix" style="width:960px;">
+			<!--{template inc/u/u_menu}-->
+            <div id="maincolumn">
+            	<div id="friend">
+                	<h1>消息</h1>
+                    <div class="ftag">
+						<ul class="cf">
+							<li class="current"><a href="/notification">私信</a></li>
+						</ul>
+					</div>
+                    <div class="infotable" id="sys_msgs">
+                    	<!--{if empty($sys_notices) && empty($sys_msgs) && empty($msg_list)}-->
+                        <span id="span-page">
+							<div class="fr_nocontent_tips">还没有收到通知</div>
+						</span>
+                        <!--{else}-->
+                        <div class="cut cf">
+							<span id="notify_display"  class="f14 gray">共有<em id="jquery-num">{$count}</em>条私信</span>
+						</div>
+                        <ul id="noticelist" class="noticelist">
+                        	<!--{loop $sys_msgs $msg}-->
+                        	<li class="cf">
+                            	<div class="select">
+                            		<input type="checkbox" value="{$msg['mid']}" name="mid" class="mid">
+                                </div>
+                                <div class="uhead">
+                                	<img src="./tpl/images/head_30.jpg" />
+                                </div>
+                                <div class="usay">
+                                	系统消息:
+                                	<a href="{u u/msgview mid=$msg['mid']}">{$msg['title']}</a>
+                                    <span class="gray">&nbsp;{timelag $msg['create_time']}</span>
+                                </div>
+                            </li>
+                            <!--{/loop}-->
+                            
+                            <!--{loop $sys_notices $notice}-->
+                        	<li class="cf">
+                            	<div class="select">
+                            		<input type="checkbox" value="{$notice['id']}" name="nid" class="nid">
+                                </div>
+                                <div class="uhead">
+                                	<img src="./tpl/images/head_30.jpg" />
+                                </div>
+                                <div class="usay">
+                                	系统通知:
+                                    <a href="{u u/msgview nid=$notice['id']}">{$notice['title']}</a>
+                                    <span class="gray">&nbsp;{timelag $msg['create_time']}</span>
+                                </div>
+                            </li>
+                            <!--{/loop}-->
+                            <!--{loop $msg_list $msg}-->
+                        		<li class="cf" href="{u u/msgview lid=$msg['mlid']}" mlid="{$msg['mlid']}">
+                                	<div class="select">
+                            			<input type="checkbox" value="{$msg['mlid']}" name="mlid" class="mlid">
+                                	</div>
+                                	<div class="uhead">
+                                        <a href="{$msg['msg_tuser']['url']}"><img src="{avatar $msg['tuid'] s 1}" height="30" width="30" /></a>
+                                    </div>
+                                    <div class="usay">
+                                    	<p class="f14"> 
+                                        <!--{if $msg['last_uid'] == $_FANWE['uid']}-->
+											我 ：
+										<!--{else}-->
+											<a href="{$msg['msg_tuser']['url']}">{$msg['msg_tuser']['user_name']}</a>：
+										<!--{/if}-->
+                                            <a href="{u u/msgview lid=$msg['mlid']}" class="blue">{$msg['last_msg']}</a>
+                                        </p>
+                                        <p class="gray datatime">
+                                        	<span class="floatright">
+                                            	<a href="{u u/msgview lid=$msg['mlid']}" class="blue">
+                                                	<em class="blue">共{$msg['num']}封</em>
+                                                </a>  
+                                                <!--{if $msg['last_uid'] != $_FANWE['uid']}-->
+												|<a href="{u u/msgview lid=$msg['mlid']}" class="blue">回复</a>
+												<!--{/if}-->
+                                            </span>
+                                            {$msg['time']}
+                                       </p>
+                                   </div>
+                               </li>
+                            <!--{/loop}-->
+                        </ul>
+                        <!--{/if}-->
+                    </div>
+                    <div class="cf">
+						<div id="jquery-select" style="float:right">
+							<span id="all_del_btn" style="display:''" class="floatright">
+                            	<a href="javascript:;" class="all" id="selectMsgAll">全选</a> | 
+                                <a href="javascript:;" class="delete" id="removeMsg">删除</a>
+                            </span>
+						</div>
+					</div>
+					<div class="pagination">
+						<!--{subtemplate inc/pages}--> 
+					</div>
+                </div>
+            </div>
+		</div>
+	</div>
+	<div class="homews_ft"></div>
+</div>
+<script type="text/javascript">
+var check_s = 1;
+jQuery(function($){
+	
+	$(".msg_list li input").click(function(event){
+		event.stopPropagation();
+	});
+	
+	$("#selectMsgAll").click(function(){
+		if(check_s == 1)
+		{
+			$(".mlid").attr('checked',true);
+			$(".mid").attr('checked',true);
+			$(".nid").attr('checked',true);
+			check_s = 0;
+		}
+		else
+		{
+			$(".mlid").attr('checked',false);
+			$(".mid").attr('checked',false);
+			$(".nid").attr('checked',false);
+			check_s = 1;
+		}
+	});
+	
+	$("#removeMsg").click(function(){
+		var mlids = new Array();
+		$(".mlid:checked").each(function(){
+			mlids.push(this.value);
+		});
+		
+		var mids = new Array();
+		$(".mid:checked").each(function(){
+			mids.push(this.value);
+		});
+		
+		var nids = new Array();
+		$(".nid:checked").each(function(){
+			nids.push(this.value);
+		});
+
+		if(mlids.length > 0 || mids.length > 0 || nids.length > 0)
+		{
+			$("#removeMsg").attr('disabled',true);
+			var query = new Object();
+			query.mlid = mlids.join(",");
+			query.mid = mids.join(",");
+			query.nid = nids.join(",");
+			
+			$.ajax({
+				url: SITE_PATH+"services/service.php?m=user&a=removemsg",
+				type: "POST",
+				data:query,
+				dataType: "json",
+				success: function(result){
+					for(var mlid in result.mlid)
+					{
+						if(result.mlid[mlid] > 0)
+						{
+							$(".msg_list li[mlid='"+ mlid +"']").remove();	
+						}
+					}
+					
+					for(var mid in result.mid)
+					{
+						if(result.mid[mid] > 0)
+						{
+							$(".msg_list li[mid='"+ mid +"']").remove();	
+						}
+					}
+					
+					for(var nid in result.nid)
+					{
+						if(result.nid[nid] > 0)
+						{
+							$(".msg_list li[nid='"+ nid +"']").remove();	
+						}
+					}
+					
+					if($(".msg_list li").length == 0)
+					{
+						location.reload(true);
+					}
+				},
+				error:function(){
+					alert('删除信件失败，请稍候重新删除');
+					$("#removeMsg").attr('disabled',false);
+				}
+			});
+		}
+	});
+});
+</script>
+<!--{template inc/footer}-->

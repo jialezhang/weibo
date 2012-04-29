@@ -1,0 +1,76 @@
+<div class="menu fr content clearfix" id="rightLabel1" {if ACTION_NAME == 'talk' || ACTION_NAME == 'fav' || ACTION_NAME == 'me'} style="margin-top:-60px;" {/if}>
+	<div class="profile">
+		<div class="p_a">
+			<div class="p_da"> <a href="{u u/book uid=$home_uid}" target="_blank"><img src="{avatar $home_uid b 1}" width="100" alt="{$home_user['user_name']}" /></a></div>
+		</div>
+		<div class="name"><a href="{u u/book uid=$home_uid}" target="_blank" class="bc">{$home_user['user_name']}</a></div>
+	</div>
+    <ul class="useratten cf">
+    	<li><a href="{u u/follow uid=$home_uid}" class="gray block usernumber">{$home_user['follows']}<br><span>关注</span></a></li>
+        <li><a id="user_profile_fans_count" href="{u u/fans uid=$home_uid}" class="block gray usernumber">{$home_user['fans']}<br><span>粉丝</span></a></li>
+        <li><a class="gray block usernumber">{$home_user['collects']}<br><span>被喜欢</span></a></li>
+    </ul>
+    
+    <!--{if $home_uid == $_FANWE['uid']}-->
+	<div class="concernbox cf">
+		<a href="{u settings/personal}" class="longbutton concern" target="_blank"><span>编辑档案</span></a>
+	</div>
+    <div class="geticons">
+		<a href="{u settings/bind}"><span class="gray_mini_sina"></span></a>
+		<a href="{u settings/bind}"><span class="gray_mini_tx"></span></a>
+		<a href="{u settings/bind}"><span class="gray_mini_rr"></span></a>
+		<a href="{u settings/bind}"><span class="gray-miniqzone"></span></a>
+	</div>
+    <!--{else}-->
+    <div class="concernbox cf">
+    	<!--{if !$is_show_follow}-->
+			<a href="javascript:void(0)" class="concerned-ico" id="followBtn" onclick="$.User_Follow({$home_uid},this,UMenuUpdateUserFollow);" style="margin-right:2px">
+            	<span><em>已关注</em></span>
+            </a>
+        <!--{else}-->
+        	<a href="javascript:void(0)" class="concern-ico" id="followBtn" onclick="$.User_Follow({$home_uid},this,UMenuUpdateUserFollow);" style="margin-right:2px">
+				<span><em>关注</em></span>
+     		</a>
+        <!--{/if}-->
+	</div>
+    <!--{/if}-->
+    
+    <div class="labelbox">
+		<h3 class="title">
+			<span class="label">她关注的人</span> <span class="number">(<em class="blue">{$home_user['follows']}</em>)</span>
+		</h3>
+		<ul class="bp cf">
+        	<!--{loop $uids  $uid $key}-->
+			<li><a href="{u u/me uid=$uid}"><img src="{avatar $uid b 1}" width="30" height="30" /> </a></li>
+            <!--{/loop}-->
+		</ul>
+	</div>
+    <div class="labelbox">
+		<h3 class="title">
+		<span class="label">关注她的人</span> <span class="number">(<em class="blue">{$home_user['fans']}</em>)
+		</span>
+	</h3>
+	<ul class="bp cf">
+		<!--{loop $fav_ids $uid}-->
+			<li><a href="{u u/me uid=$uid['uid']}"><img src="{avatar $uid['uid'] b 1}" width="30" height="30"  alt="{$uid['user_name']}"/> </a></li>
+            <!--{/loop}-->
+	</ul>
+</div>
+
+</div>
+<script type="text/javascript">
+
+function UMenuUpdateUserFollow(obj,result)
+{
+	
+	if(result.status == 1)
+	{
+		
+		$(obj).removeClass("concern-ico").addClass("concerned-ico").children("span").children("em").html("已关注");
+	}
+	else
+	{
+		$(obj).removeClass("concerned-ico").addClass("concern-ico").children("span").children("em").html("关注");
+	}
+}
+</script>

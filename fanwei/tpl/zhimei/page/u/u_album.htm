@@ -1,0 +1,86 @@
+<?php
+	$css_list[0]['url'][] = './tpl/css/zone.css';
+	$js_list[0] = './tpl/js/zone.js';
+?>
+<!--{template inc/header}-->
+<div id="body" class="fm990">
+	<div class="homens_bd clearfix">
+		<div id="content" class="clearfix" style="width:990px;">
+			<!--{template inc/u/u_menu}-->
+			<div class="content fl" style="width:762px;">
+            	<div class="sharelist">
+                	<div class="sheet cf">
+                    	<div class="floatright">
+							<span><a href="{u u/album uid=$home_uid}" class="blue">{$home_user['albums']}个专辑</a></span>
+							<span class="dot"></span>
+							<span><a href="{u u/talk uid=$home_uid}" class="blue">{$home_user['shares']}个分享</a></span>
+							<span class="dot"></span>
+							<span class="like"><a href="{u u/fav uid=$home_uid}" class="blue">{$home_user['favs']}个喜欢</a></span>
+                            <!--
+							<span class="sheetbt">
+                            	<a id="sort" style="display: inline-block; " class="longbutton arrangebt" href="javascript:void(0)">排列图格</a></span>
+                            -->
+                        </div>
+                        <span class="sheetname marginleft" id="fix-string05">{$home_user['user_name']}</span>
+                    </div>
+                </div>
+                <div id="boardList">
+                
+                <!--{if empty($album_list)}-->
+				<div class="empty">
+					<img alt="" class="fl" src="./tpl/images/fanwe4.png">
+					<span>呼~~这里还是空的~~</span>
+				</div> 
+				<!--{else}-->
+                	<!--{eval $indx = 1;}-->
+					<!--{loop $album_list $album}-->
+                    <div class="mbox" {if $indx % 3 == 0} style="margin-right:0px;"{/if}>
+                    	<div class="followlist">
+                        	<h3 class="mboxTitle">
+                            	<span class="number floatright">共{$album['share_count']}张</span>
+                                <span class="t">{cutstr $album['title'] 30}</span>
+                            </h3>
+                            <div class="list">
+                            	<ul>
+                                	<!--{eval $j = 1;}-->
+                                	<!--{eval $list_img_counts = array(0,0,0,0,0,0,0,0,0);}-->
+									<!--{loop $list_img_counts $imgkey $imgindex}-->
+									<!--{eval $img = $album['imgs'][$imgkey];}-->
+									<!--{if !empty($img)}-->
+										<li><a target="_blank" href="{$album['url']}"><img src="{getimg $img 60 60}" width="60" height="60" /></a></li>
+									<!--{else}-->
+									<li><a target="_blank" class="add_img" href="{$album['url']}"><img src="./tpl/images/no-img.gif" width="60" height="60"/></a></li>
+									<!--{/if}-->
+                                    <!--{if $j % 3 != 0}-->
+                                    <li><span></span></li>
+                                    <!--{/if}-->
+                                    <!--{eval $j++;}-->
+									<!--{/loop}-->
+                                </ul>
+                            </div>
+                            <div class="follow">
+                            	<a href="{$album['url']}"  category="0" class="longbutton concern">查看</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--{eval $indx++;}-->
+					<!--{/loop}-->
+				<div class="pagination pt15">
+					<!--{subtemplate inc/pages}--> 
+				</div>
+				<!--{/if}-->
+                </div>
+            <script>
+				jQuery(function($){
+						$("#boardList .mbox").hover(function(){
+							$(this).addClass("hover");
+						},function(){
+							$(this).removeClass("hover");
+						});
+				});
+			</script>
+			</div>
+		</div>
+	</div>
+</div>
+<!--{template inc/footer}-->

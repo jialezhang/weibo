@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><!--{if !empty($_FANWE['nav_title'])}-->{$_FANWE['nav_title']} - <!--{/if}--><!--{if empty($no_site_name)}-->{$_FANWE['setting']['site_title']}<!--{/if}--></title>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<meta name="keywords" content="{$_FANWE['seo_keywords']}{$_FANWE['setting']['site_keywords']}" />
+	<meta name="description" content="{$_FANWE['seo_description']}{$_FANWE['setting']['site_description']}" />
+	<link rel="icon" href="{$_FANWE['site_root']}favicon.ico" type="image/x-icon" />
+	<?php
+		$default_js[] = './public/js/jquery.js';
+		$default_js[] = './public/js/base.js';
+        $default_js[] = './public/js/jquery.easing.js';
+		$default_js[] = './public/js/jquery.lazyload.js';
+	?>
+	<script type="text/javascript" src="{script $default_js}"></script>
+   
+	<?php
+		$current_css[] = './tpl/css/reset.css';
+		$current_css[] = './tpl/css/base.css';
+		$current_css[] = './tpl/css/globe.css';
+		$current_css[] = './tpl/css/publishbox.css';
+		$current_css[] = './tpl/css/lightbox.css';
+		$current_css[] = './tpl/css/addfav.css';
+	?>
+	
+	
+	 
+	<link rel="stylesheet" type="text/css" href="{css $current_css}" media="all"/>
+    
+	<!--{loop $css_list $css}-->
+	<link rel="stylesheet" type="text/css" href="{css $css['url']}"{if !empty($css['media'])} media="{$css['media']}"{/if} />
+	<!--{/loop}-->
+	<script type="text/javascript">
+		var SITE_PATH = '$_FANWE[site_root]';
+		var SITE_URL = '$_FANWE[site_url]';
+		var TPL_PATH = '{TPL_PATH}';
+		var PUBLIC_PATH	 = '{PUBLIC_PATH}';
+		var MODULE_NAME	 = '{MODULE_NAME}';
+		var ACTION_NAME	 = '{ACTION_NAME}';
+		var COOKIE_PRE = "$_FANWE['config']['cookie']['cookie_pre']";
+		var TPL_NAME = '$_FANWE["setting"]["site_tmpl"]';
+	</script>
+</head>
+<body>
+<div id="pagewrap">
+	<!--新头部开始-->
+	<div id="header" class="cf">
+		<!--newhead-->
+		<div id="header-1" class="header-1">
+			<div class="topsysmenu cf" id="topsysmenu">
+				<div class="topsearch">
+					<div class="searchrelt cf">
+                    	<form action="{u book/search}" method="post" onsubmit="return false;">
+							<input type="text" class="inputtext" id="jquery-search" autocomplete="off" tooltip="{lang search_share}">
+                            <input type="submit" value=" " class="searchbt" id="fm_hd_btm_shbx_bttn" />
+							<input type="hidden" name="action" value="search" />
+                        </form>
+					</div>
+				</div>
+                <!--{dynamic getUserInfo}-->
+                <a href="{u index/index}" class="mainlogo"><img src="{$_FANWE['site_root']}{$_FANWE['setting']['site_logo']}" /></a>
+			</div>
+		</div>
+		<div id="header-2" class="header-2">
+			<div class="topchannel" id="topchannel">
+            <!--{if $_FANWE['uid']}-->
+            	<div class="fastcreate">
+					<a href="javascript:void(0)" onclick="$.User_Share()" id="addShareButton">新分享</a>
+					<a href="javascript:void(0)" id="addBoardButton" class="newShowcase" onclick="$.User_Album()">新杂志</a>
+				</div>
+            <!--{/if}-->  
+				<div class="channelmenu">
+                    <a href="{u index sy=hot}" {if $_FANWE['request']['sort'] == 'hot' || $_FANWE['request']['sort'] != 'all'} class="current" {/if}>热门</a>
+                    <span class="dot"></span>
+                    <a href="{u index sy=all}" {if $_FANWE['request']['sort'] == 'all'} class="current" {/if}>全部</a>
+                </div>
+			</div>
+		</div>
+	<div>
+    <!--{if $_FANWE['uid'] <= 0}-->
+    	<div class="altbartop" id="unlogin-alterbartop" style="display: none; ">
+			<span class="yahei16"><!--{if empty($no_site_name)}-->{$_FANWE['setting']['site_name']}，<!--{/if}-->找到真正想要的。</span>
+        	<a href="{u user/login}" class="floatbutton">{lang login}</a>&nbsp;&nbsp;或&nbsp;&nbsp;
+        	<a href="{u user/register}" class="rightbutton">{lang register}</a>
+		</div>
+    <!--{/if}-->
+	</div>
+</div>
+
+	<!--新头部结束-->
+	<div id="body_wrap">

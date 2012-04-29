@@ -1,0 +1,49 @@
+<div class="shw">
+	<div class="shw_head"> </div>
+	<div class="shw_body">
+		<div class="image" >
+			<!--<a class="flow_left" href="javascript:;"></a>
+			<a class="flow_right" href="javascript:;"></a>-->
+			<!--{if $current_type == 'bao'}-->
+			<a class="add_to_album_btn" href="javascript:;" style="display: none;" onclick="$.Show_Rel_Album($current_obj['id'],'goods');"></a>
+			<!--{else}-->
+			<a class="add_to_album_btn" href="javascript:;" style="display: none;" onclick="$.Show_Rel_Album($current_obj['id'],'photo');"></a>
+			<!--{/if}-->
+			<a href="{if $current_type == 'bao'}$current_obj['to_url']{else}{$current_obj['img']}{/if}" target="_blank" class="show_big"><img src="{getimg $current_obj['img'] 468 468}" /></a>&nbsp;
+		</div>
+		<!--{if $current_type == 'bao'}-->
+		<div class="shop_info">
+			<a href="$current_obj['to_url']" target="_blank">
+				<span class="nii_p">{cutstr $current_obj['name'] 32}</span>
+			</a>
+			<span class="price">$current_obj['price_format']</span>
+			<a href="$current_obj['to_url']" target="_blank" class="buy_url"></a>
+		</div>
+		<!--{else}-->
+		<div class="big_img"><a href="$current_obj['img']" target="_blank" class="alibm">{lang show_old_price}</a></div>
+		<!--{/if}-->
+		<!--{if !empty($share_detail['imgs']) && count($share_detail['imgs']) > 1}-->
+		<div class="small_image">
+			<ul class="nt_pic_list">
+				<!--{loop $share_detail['imgs'] $share_detail_img}-->
+				<!--{if $share_detail_img['type'] == 'g'}-->
+				<li keys="$share_detail_img['id']" tp="good" class="{if $current_type == 'bao' && $share_detail_img['id'] == $current_obj['id']}c{/if}">
+					<div><a href="$share_detail_img['url']"><img src="{getimg $share_detail_img['img'] 100 100}"></a></div>
+					<span>$share_detail_img['price_format']</span>
+				</li>
+				<!--{else}-->
+				<li tp="image" keys="$share_detail_img['id']" class="{if $current_type == 'photo' && $share_detail_img['id'] == $current_obj['id']}c{/if}">
+					<div><a href="$share_detail_img['url']"><img src="{getimg $share_detail_img['img'] 100 100}"></a></div>
+					<span>&nbsp;</span>
+				</li>
+				<!--{/if}-->
+				<!--{/loop}-->
+			</ul>
+		</div>
+		<!--{/if}-->
+		<input type="hidden" value="{$pns['prev']}" id="user_share_prev" />
+		<input type="hidden" value="{$pns['next']}" id="user_share_next" />
+	</div>
+	<div class="shw_foot"> </div>
+</div>
+<div class="blank9"></div>

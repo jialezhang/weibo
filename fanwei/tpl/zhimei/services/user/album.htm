@@ -1,0 +1,75 @@
+<div id="newpocket">
+	<div class="addtext">
+    	<span class="innerborder">
+        	<input id="newBoardName" tabindex="1" type="text" class="deftest gray " maxlength="20" value="请输入杂志社名称" albumname="请输入杂志社名称" name="album_name" />
+        </span>
+    </div>
+    <div class="category">
+    	<h2 class="f14 b">杂志社的分类？</h2>
+        <div class="list">
+        	<ul class="cf" id="boardcategories">
+				<!--{loop $_FANWE['cache']['albums']['category'] $category}-->
+                    <input tabindex="2" type="radio" name="album_cid" value="{$category['id']}">
+                	<label class="radio f14" for="radio-0">{$category['name']}</label>
+				<!--{/loop}-->
+               </ul>
+        </div>
+    </div>
+</div>
+<div id="createBoardBtnDiv" class="dialogsubmit">
+	<a id="createBoardBtn" class="calloff bigbuttongray bigbutton" href="javascript:void(0);" tabindex="4" onClick="$.Create_User_Album(this,publishCreateAlbumRel);">确认创建</a>
+    <a class="confirmback" href="javascript:;" id="jqruey-goback" style="display: none; ">确认返回</a>
+</div>
+
+<script>
+jQuery(function($){
+	$(".deftest").live('focus',function(){
+		var old = this.getAttribute("albumName");
+		if(this.value == old)
+		{
+			this.value = '';
+			$(this).css('color',"#000");
+		}
+	}).live('blur',function(){
+		var old = this.getAttribute("albumName");
+		if(this.value == old || this.value == '')
+		{
+			this.value = old;
+			$(this).css('color',"#ccc");
+		}
+	});	
+	$("#newBoardName").blur(function(){
+		checkButton();
+	});
+	$('input:radio[name="album_cid"]').click(function(){
+		checkButton();
+	});
+	
+});
+function checkButton()
+{
+	if($("#newBoardName").val() != '请输入杂志社名称' && $("#newBoardName").val() != '')
+	{
+		var list= $('input:radio[name="album_cid"]:checked').val();
+        if(list != null){
+			$("#createBoardBtn").removeClass("calloff").removeClass("callon").addClass("callon");
+		}
+	}
+	else
+	{
+		$("#createBoardBtn").removeClass("calloff").removeClass("callon").addClass("calloff");
+	}
+}
+function publishCreateAlbumRel(result)
+{
+	if(result.status == 1)
+	{
+		$.weeboxs.close();
+		location.href = result.url;
+	}
+	else
+	{
+		alert('创建杂志社失败');
+	}
+}
+</script>

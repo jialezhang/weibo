@@ -1,0 +1,49 @@
+<!--{loop $forum_list $forum_item}-->
+<div class="piece1 mt20">
+	<div class="piece1_hd"></div>
+	<div class="piece1_bd" style="padding:10px 10px 20px;">
+		<!--{eval $class = 'fl';}-->
+		<!--{loop $forum_item $forum}-->
+		<div class="{$class}" style="width:460px">
+			<h1 class="topic_grid_title">
+				<span>{$forum['char']}. </span>
+				<a target="_blank" href="{u club/forum fid=$forum['fid']}">{$forum['name']}</a>
+				<a class="p_n" href="{u club/newtopic fid=$forum['fid']}">{lang send_topic}</a>
+			</h1>
+			<ul class="topic_list w460">
+				<!--{loop $forum[topics] $topic}-->
+				<li class="tl_f">
+					<div class="tl_c">
+						<a target="_blank" href="{$topic['url']}"><img height="32" src="{getimg $topic['imgs'][0]['img'] 100 100}" class="pic"></a>
+						<div class="show_big_img">
+							<!--{loop $topic['imgs'] $img}-->
+							<img timgsrc="{getimg $img['img'] 100 100}" class="show">
+							<!--{/loop}-->
+						</div>
+						<p class="ct">
+							<a target="_blank" href="{$topic['url']}" class="tit">{cutstr $topic['title'] 42}</a>
+							<!--{getuser $topic['uid'] 0 '' 'n gc'}-->
+							<!--{if !empty($topic['lastposter'])}-->
+							<span class="p_time">
+								{lang last_post} : <!--{getuser $topic['lastposter'] 0 '' 'n'}-->
+								{$topic['last_time']}
+							</span>
+							<!--{/if}-->
+						</p>
+					</div>
+					<div class="count">{$topic['post_count']}</div>
+					<a class="all" target="_blank"  href="{$topic['url']}">{lang view_full_text}</a>
+				</li>
+				<!--{/loop}-->
+			</ul>
+			<div class="topic_more clearfix clearfix">
+				<a class="fl pl10" target="_blank" >{sprintf total_topic_count $forum['thread_count']}. . .</a>
+				<a class="s_a fr" href="{u club/forum fid=$forum['fid']}"></a>
+			</div>
+		</div>
+		<!--{eval $class = 'fr';}-->
+		<!--{/loop}-->
+	</div>
+	<div class="piece1_ft"></div>
+</div>
+<!--{/loop}-->

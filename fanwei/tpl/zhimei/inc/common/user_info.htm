@@ -1,0 +1,64 @@
+<!--{if $_FANWE['uid'] > 0}-->
+
+<div class="sysmenu">
+	<ul id="sysmenus">
+		<li>
+			<a href="{u u/me}" class="topusername foatleft"><img src="{avatar $_FANWE['uid'] s 1}"><span>{$_FANWE['user_name']}</span></a>
+            <div class="clear"></div>
+			<div class="topdmenu dmenu_location dmenuhide" id="topdmenu1">
+				<p class="fz12">
+                	<a href="{u u/album}">{lang common/album}</a>
+					<a href="{u u/talk uid=$_FANWE['uid']}">我的分享</a>
+					<a href="{u u/fav uid=$_FANWE['uid']}">我的喜欢</a>
+				</p>
+				<p class="fz12">
+					<a href="{u u/follow uid=$_FANWE['uid']}">我的关注</a>
+					<a href="{u u/fans uid=$_FANWE['uid']}">我的粉丝</a>
+					<a href="{u invite}">邀请好友 </a>
+				</p>
+				<p class="notline fz12">
+					<a href="{u settings/personal}">设置</a>
+					<a href="{u user/logout}">退出</a>
+				</p>
+			</div>
+		</li>
+		<li class="zindex">
+			<a href="javascript:void(0)" class="topothermenu" id="tips_all"><span>消息</span></a>
+            <div class="clear"></div>
+			<div class="topdmenu dmenu_location dmenu_with dmenuhide">
+				<!--<a href="/notification" id="tips_sys">系统消息</a>-->
+				<a href="{u u/message uid=$_FANWE['uid']}" id="tips_prv" class="fz12">私信</a>
+			</div>
+		</li>
+		<li>
+			<a href="javascript:void(0)" class="topothermenu"><span>关于</span></a>
+            <div class="clear"></div>
+			<div class="topdmenu dmenu_location2 dmenu_with dmenuhide">
+				<a href="{u u/talk uid=$_FANWE['uid']}" class="fz12">我发表的</a>
+                <!--
+				<a href="{u u/comments uid=$_FANWE['uid']}" class="fz12">评论我的</a>
+				<a href="{u u/atme uid=$_FANWE['uid']}" class="fz12">提到我的</a>
+				<a href="{u u/atme uid=$_FANWE['uid'],type=faved}" class="fz12">喜欢我的</a>
+                -->
+			</div>
+		</li>
+	</ul>
+</div>
+<!--{else}-->
+<div class="sysmenu">
+	<ul id="sysmenus">
+		<li><a href="{u user/login}" class="regmenu">{lang login}</a></li>
+		<li><a href="{u user/register}" class="regmenu">{lang register}</a></li>
+		<li>
+            <a href="javascript:void(0)" class="topothermenu"><span>更多</span></a>
+            <div class="clear"></div>
+			<div class="topdmenu dmenu_location2 dmenu_with dmenuhide" style="display: none; ">
+            	<img class="f_login" src="./tpl/images/icon_sina.png"><a href="{$_FANWE[site_root]}login.php?mod=sina">{lang signsina}</a>
+				<img class="f_login" src="./tpl/images/icon_qq_qq.png"><a href="{$_FANWE[site_root]}login.php?mod=qq">{lang signqq}</a>
+                <img class="f_login" src="./tpl/images/tao.png"><a href="{$_FANWE[site_root]}login.php?mod=taobao">{lang signtaobao}</a>
+                <img class="f_login" src="./tpl/images/icon_qq.png"><a href="{$_FANWE[site_root]}login.php?mod=tqq">{lang signtqq}</a>
+			</div>
+		</li>
+	</ul>
+</div>
+<!--{/if}-->

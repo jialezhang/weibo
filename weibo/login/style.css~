@@ -1,0 +1,76 @@
+body{
+background-image: url("../back2.jpg");
+background-position:center;
+background-repeat: repeat-y;
+ font-family: Verdana; 
+ font-size: 16px;
+ height: 2000px;
+
+}
+a { 
+color:black; text-decoration: none; 
+}
+a:hover { 
+color: white;
+}
+#banner { 
+border: 1px solid #CCC;
+height:26px; 
+background-image:url("../banner1.png");
+background-repeat:repeat-x;
+}
+#banner ul { 
+list-style: none;
+ margin: 0px; 
+ padding: 0px; 
+ }
+
+ #banner ul li { 
+float:left; 
+padding: 0px 8px; 
+height: 26px;
+line-height: 26px;
+ }
+ .backgroud{
+height:175px;
+width:400px;
+background-color:gray;
+position:absolute;
+left:480px;
+top:100px;		
+	}
+#email{
+	margin-top:40px;
+	margin-left:20px;
+	}
+#password{
+	margin-top:20px;
+	margin-left:20px;}
+#button{
+	left:50px;}
+#button ul { 
+list-style: none;
+ margin: 0px; 
+ padding: 0px; 
+ }
+
+ #button ul li { 
+float:left; 
+padding: 0px 8px; 
+height: 26px;
+line-height: 26px;
+left:20px;
+ }	
+
+#content{
+	background-color: gray;
+	height:250px;
+	width: 300px;
+	position:absolute;
+	left:550px;
+	top:100px;}
+ #footer{
+  position: absolute ;
+  left:550px;
+  top:500px;
+}

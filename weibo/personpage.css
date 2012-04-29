@@ -1,0 +1,78 @@
+body{
+background-image: url("back2.jpg");
+background-position:center;
+background-repeat: repeat-y;
+ font-family: Verdana; 
+ font-size: 12px;
+ height: 2000px;
+
+}
+a { 
+color:black; text-decoration: none; 
+}
+a:hover { 
+color: white;
+}
+#banner { 
+border: 1px solid #CCC;
+height:26px; 
+background-image:url("banner1.png");
+background-position:top;
+background-repeat:repeat-x;
+background-attachment:fixed;
+}
+#banner ul { 
+list-style: none;
+ margin: 0px; 
+ padding: 0px; 
+ }
+
+ #banner ul li { 
+float:left; 
+padding: 0px 8px; 
+height: 26px;
+line-height: 26px;
+ }
+
+#backtotop{
+writing-mode: tb-rl;
+background-color:white;
+position:absolute;
+left:1090px;
+top: 400px;
+height:88px;
+width: 17px;
+background-attachment:scroll;
+font-size:1.4em;	
+}
+.back{
+ 	background-image: url("back1.jpg");
+ 	background-position: center;
+ 	background-repeat: no-repeat;
+ 	height:400px;
+ 	}
+#owner_information{
+background-color:black;
+position:absolute;
+left:850px;
+top: 320px;
+height:1650px;
+width: 200px;	
+}
+#other_me{
+background-color:black;
+position:absolute;
+left:850px;
+top: 320px;
+height:1650px;
+width: 200px;	
+}
+#election{
+background-color:black;
+position:absolute;
+left:850px;
+top:0px;
+height:1650px;
+width: 200px;	
+}
+

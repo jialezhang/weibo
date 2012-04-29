@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<script src="weibo.js"></script>
+<link rel="stylesheet" type="text/css" href="weibo.css">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+<body>
+<div id=banner>
+<ul class=Banner>
+<li><a href="../login/index.php">Hompage</a></li>
+<li><a href="../public_area.php">Public-Area</a></li>
+<li><a href="../unique.php">Own-information</a></li>
+<li><a href="../friends.php">Friends</a></li>
+<li><?php
+      if( (isset($_COOKIE['user_id']))&&(!strpos($_SERVER['PHP_SELF'],'login/logout.php')) ){
+			echo'<a href="../login/logout.php" >Log out</a>';
+			}
+		else{
+			echo'<a href="../login/login.php" >Log in</a>';
+			}
+		?>
+</li>
+<div id="account">
+<li ><a href="../edit_account.php">Manage-Account</a></li>
+</div>
+</ul>	
+</div>
+<div class="personal">
+	<div class="freshthing">
+<form action="uniquepage.php" method="post">
+<div id="container_remind">请文明发言，还可以时输入 不超过 <span>140</span>字</div>
+<!--下面的等号有讲究-->
+<div>
+	<textarea id='fresh_out'name="freshthing" type="text" value="说点什么吧" onfocus="if(value='说点什么吧'){value=''}" onblur="if(value==''){value='说点什么吧'}"></textarea>
+</div>
+	<div ><input type="button" id="fabu_button" value="发布" onclick="add_fresh()"></div>
+	</div>
+	<div id="event"></div>
+	<div id="my_freshthings">
+	</div>
+	<div id="personal_imformation">
+		<?php 
+			echo "<p>{$_COOKIE['nickname']}</p>
+      			<p>{$_COOKIE['hometown']}</p>
+     				<p>{$_COOKIE['gender']}</p>
+      			<p>{$_COOKIE['age']}</p>";
+		?>
+	</div>
+</div>
+<div id="zone_information"></div>
+<div id="backtotop">回到顶部</div>
+</body>
+</html>

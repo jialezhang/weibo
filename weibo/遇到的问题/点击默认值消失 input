@@ -1,0 +1,1 @@
+<input type="text" value="请输入用户名" onfocus="if(value=='请输入用户名') {value=''}" onblur="if (value=='') {value='请输入用户名'}">

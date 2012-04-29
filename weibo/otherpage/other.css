@@ -1,0 +1,126 @@
+body{
+background-image: url("../back2.jpg");
+background-position:center;
+background-repeat: repeat-y;
+font-family: Verdana; 
+font-size: 12px;
+height: 2000px;
+width:100%;
+
+}
+a { 
+color:black; text-decoration: none; 
+}
+a:hover { 
+color: white;
+}
+#banner { 
+border: 1px solid #CCC;
+height:26px; 
+background-image:url("../banner1.png");
+background-repeat:repeat-x;
+ font-size: 16px;
+ width:100%;
+}
+#banner ul { 
+list-style: none;
+ margin: 0px; 
+ padding: 0px; 
+ }
+
+ #banner ul li { 
+float:left; 
+padding: 0px 8px; 
+height: 26px;
+line-height: 26px;
+ }
+  #account {
+ 	list-style:none;
+ 	float:right;
+ 	width:20%;
+ 	font-size:16px;}
+ 	
+ .personal{
+ 	background-image: url("../back1.jpg");
+ 	background-position: center;
+ 	background-repeat: no-repeat;
+ 	height:400px;
+ 	}
+ 	#fresh_out{
+ 		font-family: Arial;
+ 		font-weight:bold;
+ 		font-size:18px;
+ 		height:90px;
+ 		width:50%;
+ 		position:absolute;
+ 		left:22%;
+ 		top:105px;
+ 		}
+ #container_remind{
+ 	position:absolute;
+ 	left:38%;
+ 	top:80px;
+ 	font-size:1.5em;
+ 	}
+{
+ 		font-weight:bold;
+ 		font-size: 1.5em;
+ 		}
+ #fabu_button{
+ 	position:absolute;
+ 	left:59%;
+ 	top:200px;
+ 	font-size:18px;
+ 	}
+#friends_freshthings{
+font-family: Arial;
+font-weight:bold;
+font-size:18px;
+background-color:white;
+background-image:url("../regist.png");
+background-repeat:repeat-y;
+position:absolute;
+left:22%;
+top:320px;
+width: 56%;	
+margin-right:2px;
+	}
+#personal_imformation{
+background-color:gray;
+position:absolute;
+left:23%;
+top: 60px;
+height:200px;
+width: 55%;	
+	}
+#event{
+background-color:blue;
+position:absolute;
+left:22%;
+top:230px;
+height:80px;
+width: 70%;	
+}
+#zone_information{
+background-color:pink;
+position:absolute;
+left:21%;
+top: 265px;
+height:45px;
+width: 17%;	
+}
+#backtotop{
+writing-mode: tb-rl;
+background-color:white;
+position:absolute;
+left:1090px;
+top: 400px;
+height:88px;
+width: 2%;
+background-attachment:scroll;
+font-size:1.4em;	
+}
+#count{
+ font-size:16px;
+ background-color:yellow;
+	}

@@ -1,0 +1,96 @@
+<?php
+	$css_list[0]['url'][] = './tpl/css/general.css';
+	$css_list[0]['url'][] = './tpl/css/book.css';
+	$js_list[0] = './tpl/js/book.js';
+    $js_list[1] = './tpl/js/im_004.js';
+?>
+<!--{template inc/header}-->
+<link rel="stylesheet" type="text/css" href="/tpl/uu43/css/book.css" />
+<div id="body">
+	<div id="content" style="width:952px;">
+    	<div class="sheet cf f14" style="margin-left:0px; margin-right:0px">  
+			<span class="searchtitle b" style="margin-left:39px">搜索：</span>
+            <span><a href="#" class="blue">{$kwy_word}</a></span>
+			<span class="gray"> 找到了 </span>
+            <span class="pointleft"></span>
+			<span>{$count_result['share_count']}个分享</span>
+            <!--
+			<span class="dot"></span> 
+            <span class="blue"><a id="searchBoard" href='javascript:location.href="/search/board/1?keyWords="+encodeURIComponent("个")' class="blue"> {$count_result['album_count']}个杂志 </a></span>
+			<span class="dot"></span>
+            <span><a id="searchUser" href='javascript:location.href="/search/user/1?keyWords="+encodeURIComponent("个")' class="blue"> {$count_result['user_count']}个用户 </a></span>
+            -->
+		</div>
+        
+        <!--{if $user_list}-->
+        <div id="recommendUsers" class="friendlist" style="display: none; ">
+			<ul id="userList" class="cf">
+            	<!--{loop $user_list $user}-->
+				<li>
+                	<div class="uhead">
+                    	<a href="{u u/index uid=$user['uid']}"><img src="{avatar $user['uid'] m 1}" width="60"  height="60"></a>
+                    </div>
+                    <div class="uinfo">
+                    	<a href="{u u/index uid=$user['uid']}" class="f14 blue">{cutstr $user['user_name'] 8}</a>
+                        <br>
+                        <span class="gray"><!--{if $user['gender'] == 1}-->男<!--{else}-->女<!--{/if}--></span>
+                        
+                        <p>
+                        <!--{if $user['is_follow']}-->
+							<a class="buttonfollow unfriend-follow" onclick="$.User_Follow({$user['uid']},this,UpdateUserFollow)"  href="javascript:;">已关注</a>
+                        <!--{else}-->
+                            <a class="buttonfollow friend-follow" onclick="$.User_Follow({$user['uid']},this,UpdateUserFollow)"  href="javascript:;">关注</a>
+                       <!--{/if}-->
+                        </p>
+                    </div>
+                </li>
+				<!--{/loop}-->
+			</ul>
+			<div class="more">
+				<a href='#' class="lightblue f14">更多...</a>
+			</div>
+		</div>
+		<!--{/if}-->
+       
+        <!--{if $count_result['share_count'] >0}-->
+         <div id="searchresultlist"></div>
+    	<script>
+			jQuery(function($){
+				var linkUrl = '{$link_url}',jsonUrl = '{$json_url}';
+				autoLayout.init({
+				contentID:"searchresultlist",
+				rightLoad:true,
+				leftID:[],
+				rightID:[],
+				linkUrl:linkUrl
+				});
+				autoLayout.eachAction(jsonUrl);
+			});
+		</script>
+    	<!--{else}-->
+		<div class="nosearchresult">
+        	<p>抱歉没有找到"<span class="blue">{$kwy_word}</span>"相关的分享<br></p>
+            <span class="gray">建议： <br>请尽量输入常用词 <br>请尽量使用简洁的关键词</span>
+        </div>
+    	<!--{/if}-->
+    </div>
+    
+</div>
+<script type="text/javascript">
+function UpdateUserFollow(obj,result)
+{
+	if(result.status == 1)
+	{
+				
+		$(obj).removeClass("friend-follow").addClass("unfriend-follow").html("已关注");
+	}
+	else
+	{
+		$(obj).removeClass("unfriend-follow").addClass("friend-follow").html("关注");
+	}
+}
+
+</script>
+<div id="imloading" class="imfootloading" style="display:none;"><div class="loading">正在加载，请稍后......</div></div>
+<div id="firstload" class="firstload" style="display:none;">加载中…</div>
+<!--{template inc/footer}-->

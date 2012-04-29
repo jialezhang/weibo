@@ -1,0 +1,229 @@
+<?php
+	$css_list[0]['url'][] = './tpl/css/zone.css';
+	$js_list[0] = './tpl/js/zone.js';
+?>
+<!--{template inc/header}-->
+<div id="body" class="fm960">
+	<div class="homens_hd"></div>
+	<div class="homens_bd clearfix">
+		<div id="content" class="clearfix" style="width:960px;">
+			<!--{template inc/u/u_menu}-->
+			<div id="maincolumn">
+            	<div id="friend">
+                	<h1>消息</h1>
+                    <div class="ftag">
+						<ul class="cf">
+							<li class="current"><a href="{u u/message uid=$home_uid}">私信</a></li>
+						</ul>
+					</div>
+                    <div class="infotable">
+                    <form id="msgForm" name="msgForm">
+                    	<div class="chat cf">
+                        	<div class="uhead">
+                            	<a href="{u u/index uid=$home_uid}">
+                            		<img src="{avatar $home_uid m 1}" width="60" height="60">
+                                </a>
+                            </div>
+                            <div class="testform">
+                            	<div id="jquery-addnumber" class="dialomark cf">
+                                	<span class="sendname">发私信给：<em id="to_user_name">{$mlist['msg_tuser']['user_name']}</em></span>
+                                </div>
+                                <div class="textarea">
+									<span>
+										<textarea name="message" class="PUB_TXT r3" id="msg_message"></textarea>
+									</span>
+                                    <input type="hidden" name="lid" value="{$mlist['mlid']}" />
+								</div>
+                                <div class="submit alignright">
+                                	<div id="msg_message_tip" style="displya:none;" class="blue"></div>
+									<a class="winbtn addin" href="javascript:void(0)" id="msg_send_btn" >
+                                    提交
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                        <ul id="message_detail" class="dialoguelist">
+                        <!--{loop $msg_list $msg}-->
+                        	<!--{if $msg['uid'] == $_FANWE['uid']}-->
+                            <div class="cf aitem">
+                            	<div class="yhead">
+                                	<a href="{u u/me}">
+                                    	<img src="{avatar $home_uid m 1}" width="60" height="60"></a>
+                                </div>
+                                <div class="conversations ta">
+                                	<div class="top"></div>
+                                    <div class="client">
+                                    	<span class="pointer"></span>
+                                        <a href="javascript:void(0)" class="blue">我</a>：{nl2br $msg['message']}
+                                        <p class="del-letter">
+                                            <a href="javascript:void(0)" miid="{$msg['miid']}" class="blue floatright deleteMsg">删除</a>
+                                           
+                                        	<span class="gray">{$msg['time']}</span>
+                                        </p>
+                                    </div>
+                                	<div class="bottom"></div>
+                              	</div>
+                             </div>
+                            <!--{else}-->
+                        	<div class="cf aitem">
+                            	<div class="uhead">
+                        			<a href="{$mlist['msg_tuser']['url']}"><img src="{avatar $mlist['tuid'] m 1}" height="60" width="60" /></a>
+                        		</div>
+                                <div class="conversations my">
+                                	<div class="top"></div>
+                                    <div class="client">
+                                    	<span class="pointer"></span>
+                                        <a href="{$mlist['msg_tuser']['url']}" class="blue">{$mlist['msg_tuser']['user_name']}</a>：
+                                        	{nl2br $msg['message']}
+                                        <p class="del-letter">
+                                                <a href="javascript:;" class="deleteMsg blue floatright" miid="{$msg['miid']}">删除</a>
+                                            <span class="gray">{$msg['time']}</span>
+                                        </p>
+                                    </div>
+                                    <div class="bottom"></div>
+                                </div>
+                            </div>
+                        	<!--{/if}-->
+                        	
+                            <!--{/loop}-->
+                            
+                        </ul>
+                        <div class="pagination mt20">
+							<!--{subtemplate inc/pages}--> 
+						</div>
+                    </div>
+                </div>
+            
+            </div>
+		</div>
+	</div>
+	<div class="homews_ft"></div>
+</div>
+<div id="msgViewItem" class="hide">
+<div class="cf aitem">
+    <div class="yhead">
+        <a href="{u u/me}">
+           <img src="{avatar $home_uid m 1}" width="60" height="60">
+        </a>
+    </div>
+    <div class="conversations ta">
+        <div class="top"></div>
+        <div class="client">
+           <span class="pointer"></span>
+           <a href="javascript:void(0)" class="blue">我</a>：###MESSAGE###
+           <p class="del-letter">
+           		<a href="javascript:void(0)" miid="###MIID###" class="blue floatright deleteMsg">删除</a>
+           		<span class="gray">###TIME###</span>
+           </p>
+       </div>
+       <div class="bottom"></div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+jQuery(function($){
+	$("#msg_message").bind("blur change",function(){
+		var message = $.trim(this.value);
+		var len = $.getStringLength(message);
+		if(len < 2 || len >200)
+		{
+			$("#msg_message").attr('check',0);
+			$("#msg_message_tip").show().html('内容由2到200个字符组成，一个汉字两个字符');
+		}
+		else
+		{
+			$("#msg_message").attr('check',1);
+			$("#msg_message_tip").hide();
+		}
+	});
+	
+	$("#msg_send_btn").click(function(){
+		$("#msgForm").submit();
+	});
+	$("#msgForm").submit(function(){
+		var form = this;
+		$(".msg_tip").hide();
+		$(".msg_loading").hide();
+		
+		var message = $.trim(this.message.value);
+		var len = $.getStringLength(message);
+		if(len < 2 || len >200)
+		{
+			$("#msg_message_tip").show().html('内容由2到200个字符组成，一个汉字两个字符');
+			return false;
+		}
+		
+		$("#msg_send_btn").attr('disabled',true);
+		$("#msg_send_loading").show();
+		
+		$.ajax({
+			url: SITE_PATH+"services/service.php?m=user&a=replymsg",
+			type: "POST",
+			data:$(this).serialize(),
+			dataType: "json",
+			success: function(result){
+				if(result.status > 0)
+				{
+					var html = $("#msgViewItem").html();
+					html = html.replace('###MIID###',result.status);
+					html = html.replace('###TIME###',result.time);
+					html = html.replace('###MESSAGE###',result.message);
+					var msg_item = $(html).css({"display":"none"});
+					$("#message_detail").append(msg_item);
+					msg_item.slideDown("slow");
+					form.message.value = '';
+				}
+				else
+				{
+					alert('回复信件失败，请稍候重新发送');
+				}
+				
+				$("#msg_send_loading").hide();
+				$("#msg_send_btn").attr('disabled',false);
+			},
+			error:function(){
+				alert('回复信件失败，请稍候重新发送');
+				$("#msg_send_loading").hide();
+				$("#msg_send_btn").attr('disabled',false);
+			}
+		});
+		
+		return false;
+	});
+	
+	$(".deleteMsg").live('click',function(){
+		var miid = this.getAttribute("miid");
+		if(miid != null)
+		{
+			var obj = this;
+			$(obj).attr('disabled',true);
+			var query = new Object();
+			query.miid = miid;
+			$.ajax({
+				url: SITE_PATH+"services/service.php?m=user&a=deletemsg",
+				type: "POST",
+				data:query,
+				dataType: "json",
+				success: function(result){
+					if(result.status > 0)
+					{
+						$(obj).parent().parent().parent().parent().slideUp("slow");
+						$(obj).parent().parent().parent().parent().remove();
+					}
+					else
+					{
+						alert('删除信件失败，请稍候重新删除');
+						$(obj).attr('disabled',false);
+					}
+				},
+				error:function(){
+					alert('删除信件失败，请稍候重新删除');
+					$(obj).attr('disabled',false);
+				}
+			});
+		}
+	});
+});
+</script>
+<!--{template inc/footer}-->

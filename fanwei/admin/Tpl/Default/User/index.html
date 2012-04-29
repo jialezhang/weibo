@@ -1,0 +1,38 @@
+<tagLib name="fanwe" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Static/Js/dataList.js"></script>
+<div class="handle-btns">
+	<fanwe:imageBtn id="addAdmin" name="addAdmin" value="{%ADD}" click="addData()" />
+	<fanwe:imageBtn id="editAdmin" name="editAdmin" value="{%EDIT}" click="editData(this,'checkList','uid')" />
+	<fanwe:imageBtn id="removeAdmin" name="removeAdmin" value="{%REMOVE}" click="removeData(this,'checkList')" />
+	<form action="__APP__">
+		<span>{%GID}</span>
+		<select name="gid">
+			<option value="">{%SELECT_GROUP}</option>
+			<foreach name="group_list" key="groupid" item="gname">
+			<option value="{$groupid}" <if condition="$gid eq $groupid">selected="selected"</if>>{$gname}</option>
+			</foreach>
+		</select>
+		<span>{%USER_NAME}</span>
+		<input class="textinput" type="text" value="{$user_name}" name="user_name" size="10" />
+		<small></small>
+		<span>{%EMAIL}</span>
+		<input class="textinput" type="text" value="{$email}" name="email" size="10" />
+		<input class="submit_btn" type="submit" value="{%SEARCH}" />
+		<input type="hidden" name="{:c('VAR_MODULE')}" value="{$module_name}" />
+		<input type="hidden" name="{:c('VAR_ACTION')}" value="index" />
+	</form>
+</div>
+<!--<div class="search-box">
+	<form action="">
+		<span>{%USER_NAME}</span>
+		<input class="textinput" type="text" value="" name="user_name" size="10" />
+		<small></small>
+		<span>{%EMAIL}</span>
+		<input class="textinput" type="text" value="" name="email" size="10" />
+		<input class="submit_btn" type="submit" value="{%SEARCH}" />
+	</form>
+</div>-->
+<fanwe:list id="checkList" pk='uid' style="list" name="admin" checkbox="true" action="true" datasource="list" show="uid:{%ID}|80,user_name:{%USER_NAME}|~left:textEdit|uid,email:{%EMAIL}|~left:textEdit|uid,gid|getGroupName:{%GID}|100,credits:{%CREDITS}|70:numberEdit|uid,reg_time|toDate:{%REG_TIME}|140,status|getStatusImg:{%STATUS}|60:toggleStatus|uid" actionlist="editData:{%EDIT}:uid,removeData:{%REMOVE}:uid" action_width="100" />
+<div class="pager">{$page}</div>
+<include file="Public:footer" />

@@ -1,0 +1,12 @@
+<?php
+if(!isset($_COOKIE['user_id'])){
+	header("Location:login.php");
+	exit();
+	                               }
+$page_title="Logged in";
+include('header.html');
+	echo "<h1>Logged in!</h1>
+	<p>you are now logged in ,{$_COOKIE['age']}!</p>
+	<p><a href=\"../uniquepage/uniquepage.php\">Click to your Own-Page</a></p>";
+include('footer.html');
+?>

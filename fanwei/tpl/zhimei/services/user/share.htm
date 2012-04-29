@@ -1,0 +1,172 @@
+<div id="ushare">
+<form method="post" id="u_zone_form">
+	<div id="loading" class="client cf">
+    	<ul class="dialog-tag" id="cuttab">
+			<li class="active local current">本地图片</li>
+			<!--<li class="active net">网络图片</li>-->
+			<li class="say">仅支持JPG、GIF、PNG图片文件，且文件小于5M</li>
+		</ul>
+        <input type="hidden" id="addImageType" value="0">
+        <div id="tab0" class="tabContent cf">
+    	<div class="indeximg">
+        	<div id="loadingDiv0" class="loading"></div>
+            <img id="loadingImg0" class="loadimg" src="./tpl/images/loadinggray.gif" />
+            <img id="thumb0" style="display:none;" width="190" height="190" />
+        </div>
+        <div class="saybox">
+        	<div class="swfbtn">
+            	<div class="tfile_box">
+            		<input class="gray_button r3" value="上传图片" type="button">
+                	<input class="tfile PUB_PIC_FILE" name="image" type="file" id="uploadShareImg" onchange="UploadShareImg();">
+                </div>
+                
+           </div>
+           <div class="selectbox margin cf">
+                <span class="combox" style="width:372px;">
+                	<input class="comboxText" style="width:335px" readonly="readonly" type="text" value="选择杂志社">
+                    <span class="comboxArrow"></span>
+                    <input class="comboxValue" type="hidden" value="">
+                    <div id="pannel" class="pannel" style="width: 372px; display: none; ">
+                    	
+                   </div>
+                </span>
+           </div>
+           <div class="textareabox margin">
+           		<textarea id="addTitle0" name="content" length="140" position="0" class="PUB_TXT"></textarea>
+                <div class="saynumber">
+					<span class="floatright">
+                    	<em id="sharenumid0" class="blue WORD_COUNT">0</em>/140
+                    </span>
+				</div>
+           </div>
+           <div class="integralbox margin" style="display:none; margin-bottom:12px;"> 
+           </div>
+           <span id="urlTip0"></span>
+           <div id="submitDiv0" class="submit" style="padding-left:0px;">
+           		<a id="btnSaveBoardPic0" class="bigbutton bigbuttongray calloff" href="javascript:void(0);">分享</a>
+           </div>
+        </div>
+    	</div>
+        
+        <div id="tab1" class="tabContent cf" style="display:none;">
+            
+        </div>
+        <input type="hidden" name="pics[]" value="" id="pics" />
+        <input type="hidden" name="albumid" class="PUB_ALBUM_ID" value="0"  id="albumid" />
+        <input type="hidden" name="img_url" value="" id="img_url" />
+		<input type="hidden" name="module" value="share" />
+		<input type="hidden" name="action" value="save" />
+    </div> 
+</form>
+</div>
+<script>
+var isUpload = false;
+
+var ALBUM_SELECT_ID = 0;
+
+$("#pannel li").live("mouseover",function(){
+	$(this).removeClass("out");
+	$(this).addClass("over");	
+}).live('mouseout',function(){
+	$(this).removeClass("over");
+	$(this).addClass("out");	
+}).live('click',function(){
+	$(".comboxText").val($(this).attr("default"));
+	$("#albumid").val($(this).attr("value"));
+	$.checkForm();
+	$("#pannel").hide();	
+});
+$(".comboxArrow").click(function(){
+	getAlbumList();
+});
+
+$("#btnSaveBoardPic0").click(function(){
+	if ( $(this).hasClass("calloff") )
+	{
+		return false;
+	}
+	else
+	{
+		$(this).removeClass("callon").addClass("calloff").html("保存");
+		var loc_url = location.href;
+		$.Share_Save(this,loc_url);	
+	}
+});
+		
+$(".comboxText").click(function(){
+	getAlbumList();
+});
+$.Pub_Count_Bind($("#u_zone_form .PUB_TXT"));
+
+/*
+$("body").bind('click',function(event){x
+	if($(".pannel").css("display") != 'none' )
+	{
+		$(".pannel").hide();
+	}
+	
+});	
+*/
+
+
+
+
+function getAlbumList()
+{
+	var query = new Object();
+	query.aid = ALBUM_SELECT_ID;
+	
+
+	$.ajax({
+		url: SITE_PATH+"services/service.php?m=share&a=selectalbum",
+		type: "POST",
+		data:query,
+		dataType: "json",
+		success: function(result){
+			$("#pannel").html(result.html);
+			$("#pannel").show();
+		}
+	});
+}
+
+function UploadShareImg()
+{
+	if(isUpload)
+		return;
+	else
+		isUpload = true;
+	
+	$("#loadingImg0").show();
+	$.ajaxFileUpload({
+		url:SITE_PATH + "services/service.php?m=share&a=uploadFile",
+		secureuri:false,
+		fileElementId:'uploadShareImg',
+		dataType:'json',
+		success:function(result)
+		{
+			if(result.status)
+			{
+				$("#loadingImg0").hide();
+				$("#thumb0").attr("src",SITE_PATH + result.src);
+				$("#thumb0").css('display','block');
+				$("#img_url").val(result.src);
+				$("#pics").val(result.info);
+				$.checkForm();
+			}
+			else
+			{
+				$("#avatarmsg").html("上传头像失败");
+			}
+			isUpload = false;
+		},
+		error:function ()
+		{
+			$(".preview").hide();
+			$(".avartar_confirm").hide();
+			isUpload = false;
+			$("#avatarmsg").html("上传头像失败");
+		}
+	});
+}
+</script>
+

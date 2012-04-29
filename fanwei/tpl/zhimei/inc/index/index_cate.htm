@@ -1,0 +1,29 @@
+<div id="content" style=" ">     
+	<div id="leftLabel" class="rightbox">
+    	<div class="pin labels">
+        	<ul class="cf">
+            	<li>
+                	<a href="{u index/index}" {if $category_id == ''}class="current"{/if}><em>全部分类</em></a>
+                </li>
+                <!--{loop $_FANWE['cache']['albums']['category'] $category}-->
+                    <li><a href='{u index/index hot=$category['id']}' {if $category_id == $category['id']}class="current"{/if}><em>{$category['name']}</em></a></li>
+				<!--{/loop}-->
+            </ul>
+        </div>
+    </div>        
+</div>
+<script>
+jQuery(function($){
+
+var linkUrl = '{$link_url}',jsonUrl = '{$json_url}';
+autoLayout.init({
+contentID:"content",
+rightLoad:true,
+leftID:"leftLabel",
+rightID:[],
+linkUrl:linkUrl
+});
+autoLayout.eachAction(jsonUrl);
+});
+
+</script>

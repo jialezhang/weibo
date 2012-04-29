@@ -1,0 +1,21 @@
+.backgroud{
+height:175px;
+width:400px;
+background-color:gray;
+position:absolute;
+left:500px;
+top:100px;		
+	}
+.input ul {
+	list-style:none;}
+.input ul li {
+	float:left;
+	margin-left:50px;
+	}
+#account{
+	margin-top:40px;
+	margin-left:20px;
+	}
+#password{
+	margin-top:20px;
+	margin-left:20px;}

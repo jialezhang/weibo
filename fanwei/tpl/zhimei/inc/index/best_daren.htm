@@ -1,0 +1,22 @@
+<div class="best_daren">
+	<div class="dbaren_head">
+		<strong>{lang uu_best_daren}</strong>
+		<a href="{u daren}" class="fr">{lang more}>></a>
+	</div>
+	<div class="list">
+		<ul>
+			<!--{loop $daren_list $daren}-->
+			<li>
+				<a target="_blank" href="{u u/index uid=$daren['uid']}" class="uimg"><img height="256" original="{$daren['img']}" src="./tpl/images/lazyload.gif" class="lazyload" /></a>
+				<div class="uuser">
+					<!--{getuser $daren['uid'] 0 '' 'uname'}-->
+					<!--{getfollow $daren['uid'] inc/getfollow/best_daren}-->
+				</div>
+				<div class="inf">
+					{$daren['reason']}
+				</div>
+			</li>
+			<!--{/loop}-->
+		</ul>
+	</div>
+</div>

@@ -1,0 +1,24 @@
+<li class="c_f" id="COMMENT_{$comment['comment_id']}">
+	<div class="uhead">
+		<a href="{u u/index uid=$comment['uid']}">
+        	<img src="{avatar $comment['uid'] m 1}" width="60" height="60">
+        </a>
+	</div>
+	<div class="usay">
+		<h3 class="cf">	
+			<!--{if $is_remove_comment}-->	
+				<span class="floatright gray">
+                	<a onClick="$.Delete_Comment($comment['comment_id'],this);" class="del blue" w="f" href="javascript:void(0);">删除</a>
+           		</span>
+        	<!--{/if}-->
+        	<span class="floatright gray pd15">
+            	<a class="rpl blue" w="f" href="javascript:;" uname='{$comment['user']['user_name']}' cid="{$comment['comment_id']}" onClick="$.Reply_Comment(this);">回复</a>
+        	</span>
+         	<span class="f14 blue"><a href="{u u/index uid=$comment['uid']}" class="blue">{$comment['user']['user_name']}</a></span>		
+ 		</h3>
+        <p>{$comment['content']}</p>
+        	<span class="gray">
+            	{$comment['time']}
+        	</span>
+	</div>			
+</li>

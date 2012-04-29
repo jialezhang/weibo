@@ -1,0 +1,32 @@
+<ul style="width: 372px; height: 165px; ">
+	<!--{loop $list $album}-->
+			<li value="{$album['id']}" default="{$album['title']}">{$album['title']}</li>
+	<!--{/loop}-->
+</ul>
+
+<div class="comboxAdd">
+     <span class="innerborder">
+         <input class="deftest" type="text" value="" size="10" maxlength="20 name="album_name">
+     </span> 
+     <select class="album_cid">
+			<!--{loop $_FANWE['cache']['albums']['category'] $category}-->
+			<option value="{$category['id']}">{$category['name']}</option>
+			<!--{/loop}-->
+	 </select>
+     <input class="addsort" type="button" value="新建杂志社" onclick="$.New_Create_Album(this,publishCreateAlbumHadnler);">
+</div>
+
+<script>
+
+
+function publishCreateAlbumHadnler(result)
+{
+	var xhtml = '<option value="'+result.aid+'">'+result.title+'</option>';
+	$(".album_cid").append(xhtml);
+	$(".comboxText").val(result.title);
+	$("#albumid").val(result.aid);
+	$.checkForm();
+	$("#pannel").hide();
+}
+
+</script>

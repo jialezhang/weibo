@@ -1,0 +1,109 @@
+<?php
+	$css_list[0]['url'] = './tpl/css/imagewall.css';
+	$css_list[1]['url'] = './tpl/css/album.css';
+	$js_list[0] = './tpl/js/album.js';
+    $js_list[1] = './tpl/js/im_004.js';
+?>
+<!--{template inc/header}-->
+<div id="content">
+	<div class="sharelist" id="zhimeisheetbar">
+    	<div class="sheet cf">	
+		<div class="floatright">
+			<span>
+				共<em id="shareNum">{$home_user['shares']}</em>个分享
+			</span>
+            <span class="sheetbt">
+            <!--{if $_FANWE['uid'] == $home_uid}-->
+            	<a id="edit" class="winbtn addin" href="javascript:void(0)" onclick="$.Edit_Album({$album['id']})">编辑</a></span>
+            <!--{elseif $is_show_follow}-->
+            	<a class="winbtn addin" href="javascript:void(0)" onclick="$.User_Follow({$home_uid},this,UpdateUserFollow)" >关注</a></span>
+            <!--{else}-->
+                <a  onclick="$.User_Follow({$home_uid},this,UpdateUserFollow)" class="winbtn unaddin" href="javascript:void(0)" style="display: inline-block; ">已关注</a>
+            <!--{/if}-->
+		</div>
+		<a class="sheetname blue" href="{u u/index uid=$home_uid}" id="fix-string03">{$home_user['user_name']}</a>
+		<span class="pointleft">
+		</span>
+        <span class="sheetname" id="fix-string04">{$album['title']}</span>
+        </div>
+	</div>
+    <div style="clear:both"></div>
+    <div id="contentMain" class="content" style="position:relative; margin-top:16px;">
+    	<div id="rightLabel1" class="rightbox bgwhite" style="margin-top:-75px; background-color:#FFF; right:0px;">
+        	<div id="myinfo">
+            	<div class="topline userbox cf">
+					<h3 class="title"><span class="label">创建者</span> </h3>
+					<div class="uhead" style="height:60px;">
+						<a href="{u u/index uid=$home_uid}">
+                        <img src="{avatar $home_uid s 1}" title="{$home_user['user_name']}" width="60" height="60">
+                        </a>
+					</div>
+					<div class="uinfo">
+						<p>
+							<a class="blue arial b" href="{u u/index uid=$home_uid}">{cutstr $home_user['user_name'] 15}</a>
+						</p>
+					</div>
+				</div>
+                <div class="labelbox userbox">
+					<h3 class="title">
+						<span class="label">
+                        <!--{if $_FANWE['uid'] == $home_uid}-->
+                        我
+                        <!--{elseif $home_user['gender'] == 1}-->
+                        他
+                        <!--{else}-->
+                        她
+                        <!--{/if}-->
+                        的其他图格</span>
+					</h3>
+					<ul class="taport" id="jqury-textdecoration">
+                    	<!--{eval $indx = 1;}-->
+						<!--{loop $album_list $album}-->
+						<li class="cf">
+                        	<a class="blue" href="{u album/show id=$album['id']}" title="{$album['title']}">
+                            	<span class="floatright gray">{$album['share_count']}张</span>
+								{cutstr $album['title'] 20}
+							</a>
+                        </li>
+                        <!--{/loop}-->
+					</ul>
+				</div>
+            </div>
+        </div>
+    </div>
+    <div id="imloading" class="imfootloading" style="display:none;"><div class="loading">正在加载，请稍后......</div></div>
+	<div id="firstload" class="firstload" style="display:none;">加载中…</div>
+</div>
+
+<script>
+jQuery(function($){
+
+var linkUrl = '{$link_url}',jsonUrl = '{$json_url}';
+autoLayout.init({
+contentID:"contentMain",
+rightLoad:true,
+leftID:[],
+rightID:["rightLabel1"],
+linkUrl:linkUrl,
+pageAuto: true,
+loadingID:"imloading"
+});
+autoLayout.eachAction(jsonUrl);
+});
+
+function UpdateUserFollow(obj,result)
+{
+	if(result.status == 1)
+	{
+		
+		$(obj).removeClass("addin").addClass("unaddin").html("已关注");
+	}
+	else
+	{
+		$(obj).removeClass("unaddin").addClass("addin").html("关注");
+	}
+	
+}
+
+</script>
+<!--{template inc/footer}-->

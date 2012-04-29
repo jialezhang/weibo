@@ -1,0 +1,26 @@
+<html>
+<head>
+<title><?php echo $page_title;?></title>
+<script src="body.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css" media="screen"/>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+</head>
+<body>
+<div id=banner>
+<ul>
+<li><a href="index.php">Hompage</a></li>
+<li><a href="regist.php">Register</a></li>
+<li><a href="../friends/friends.php">View users</a></li>
+<li><a href="edit_account.php">Manage-Account</a></li>
+<li>
+<?php
+      if( (isset($_SESSION['user_id']))&&(!strpos($_SERVER['PHP_SELF'],'logout.php')) ){
+			echo'<a href="logout.php" >Log out</a>';
+			}
+		else{
+			echo'<a href="login.php" >Log in</a>';
+			}
+?>
+</li>
+</ul>
+</div>

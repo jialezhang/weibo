@@ -1,0 +1,16 @@
+<div class=input>
+<div id=email>E-mail:<input value=""size=20></div>
+<div id=password>Password:<input value=""size=17></div>
+<ul>
+<li>
+<div id=login><input type="button" value="Login"onclick="login()"></div>
+</li>
+<li>
+<div id=signin ><input onclick="regist()"  type="submit" value="signin" ></div>
+</li>
+</ul>
+<div><input type="hidden" name="submitted" value="true"></div>
+</div>
+</body>
+</html>
+

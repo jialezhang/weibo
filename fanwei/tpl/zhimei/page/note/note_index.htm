@@ -1,0 +1,316 @@
+<?php
+	$css_list[0]['url'][] = './tpl/css/tweetlist.css';
+	$css_list[0]['url'][] = './tpl/css/sidebar.css';
+	$css_list[0]['url'][] = './tpl/css/note.css';
+	$js_list[0] = './tpl/js/note.js';
+?>
+<!--{template inc/header}-->
+
+<div class="divrelative">
+    <div class="sharetoolsbody" id="sharetoolsbody" style="top: 84px; right: -55px; ">
+        <h2>分享</h2>
+        <div class="applist">
+            <ul>
+                <li>
+        		<!--{eval $invite_title = $share_detail['title'];}-->
+                <!--{eval $invite_content = $share_detail['content'];}-->
+                <!--{eval $invite_types = array('renren','sina','tqq');}-->
+                <!--{eval $invite_url = $share_detail['url'];}-->
+                <!--{eval $invite_pic = $_FANWE['site_url'].$current_obj['img'];}-->
+                <!--{eval $sns_links = getSnsLink($invite_types,$invite_title,$invite_url,$invite_content,$invite_pic);}-->
+                <a class="sharesina" title="分享到新浪微博"  href="{$sns_links['sina']}"></a></li>
+                <li><a class="sharetx" title="分享到腾讯微博" href="{$sns_links['tqq']}"></a></li>
+                <li><a class="sharerr" title="分享到人人网" href="{$sns_links['renren']}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="content" class="cf">
+	<div id="maincolumn">
+		<div class="utop cf">
+			<div class="uhead">
+				<a href="{u u/index uid=$share_user['uid']}"><img src="{avatar $share_user['uid'] m 1}" id="backtothis" title="{$share_user['user_name']}" width="60" height="60"></a>
+			</div>
+			<div class="uright">
+				<span class="favfor cf" id="jquery-favfor">
+                	<div class="favforL">
+                    	<span class="nopointe" {if !$is_follow} style="display:none;"{/if}>
+                    		<span class="number">{$share_detail['collect_count']}</span>
+                        	<em></em>
+                   		 </span>	
+                    	<a href="javascript:;" onclick="$.Fav_Share({$share_detail['share_id']},this,32,'#note_{$share_detail['share_id']}');" id="fav1" class="fav" {if $is_follow}style=" display:none;"{/if}> 
+							<span class="number">{$share_detail['collect_count']}</span><em></em>
+						</a>
+                    </div>
+                 	<div class="favforR">
+                    	<a href="javascript:;" onclick="$.Relay_Share($share_detail['share_id']);" class="fov" id="fav2" >
+							<span class="number">{$share_detail['relay_count']}</span><em></em> 
+						</a> 
+                    </div>
+				</span>
+				<h1 class="cf">
+					<span class="name">
+                    	<a href="{u u/index uid=$share_user['uid']}">{$share_user['user_name']}</a>
+                    </span>{$share_detail['time']}
+                </h1>
+				<p>
+					<a href="{u u/album uid=$share_user['uid']}" class="black">
+                    	<span class="blue">{$share_user['albums']}</span>个图格
+                    </a>
+                    <a href="{u u/talk uid=$share_user['uid']}" class="black"><span class="blue">{$share_user['shares']}</span>个分享</a>
+                    <a href="{u u/fav uid=$share_user['uid']}" class="black"><span class="blue">{$share_user['favs']}</span>个喜欢</a>
+				</p>
+			</div>
+		</div>
+		<div id="shareshow" class="grayline cf">
+			<h2 class="f14">{$share_detail['title']}</h2>
+			
+            <!--{if $current_type == 'other'}-->
+				<!--{subtemplate page/note/note_other}-->
+				<!--{else}-->
+				<!--{subtemplate page/note/note_img}-->
+			<!--{/if}-->
+	</div>
+	<div id="comment" class="grayline">
+		<h2 class="f14 black">评论</h2>
+        <form method="post">
+		<input type="hidden" value="0" id="replyCommentId">
+		<div class="newcomment cf">
+			<input type="hidden" value="25407" id="boardPicId" name="boardPicId">
+			<img src="http://b.zhimei.com/thumb/head_60.jpg">
+			<span class="ta-span">
+				<textarea id="commentta" name="content" class="PUB_TXT" style="display: inline-block; height: 52px;">说点什么吧……</textarea>
+			<div id="divconfirm" style="display: none;">
+            	<div class="pub_ext">
+						<div class="pub_out fr">
+								<input id="comment_relay_tweet" type="checkbox" name="is_relay" checked="checked" value="1" />
+								<label for="comment_relay_tweet">{lang js_relay_share}</label>
+								<input type="hidden" value="$share_detail['share_id']" name="share_id" />
+								<input type="hidden" name="parent_id" value="0" />
+						</div>
+				</div>
+             <div class="clearfix"></div>         
+			<p><em class="curnum">0</em>/<span>140</span></p>
+				<a id="btnSaveComment" class="submitbtn unconfirm-btn" href="javascript:;" onclick="$.Add_Share_Comment(this,'#SHARE_COMMENT_LIST_{$share_detail['share_id']}')">提交</a>
+		</div>
+        
+	</span>
+</div>
+
+<div id="SHARE_COMMENT_LIST_BOX" class="commentlist">
+	<ul id="SHARE_COMMENT_LIST_{$share_detail['share_id']}" class="c_l rb5">
+		<!--{loop $share_detail['comments'] $comment}-->
+			<li class="c_f" id="COMMENT_{$comment['comment_id']}">
+            	<div class="uhead">
+					<a href="{u u/index uid=$comment['uid']}">
+                		<img src="{avatar $comment['uid'] m 1}" width="60" height="60">
+                	</a>
+                </div>
+                <div class="usay">
+                	<h3 class="cf">	
+                    	<!--{if $is_remove_comment}-->	
+                    	<span class="floatright gray">
+                        	<a onClick="$.Delete_Comment($comment['comment_id'],this);" class="del blue" w="f" href="javascript:void(0);">删除</a>
+                        </span>
+                        <!--{/if}-->
+                        <span class="floatright gray pd15">
+                        	<a class="rpl blue" w="f" href="javascript:;" uname='{$comment['user']['user_name']}' cid="{$comment['comment_id']}" onClick="$.Reply_Comment(this);">回复</a>
+                        </span>
+                        <span class="f14 blue"><a href="{u u/index uid=$comment['uid']}" class="blue">{$comment['user']['user_name']}</a></span>		
+                    </h3>
+                	<p>{$comment['content']}</p>
+                    <span class="gray">
+                    		{$comment['time']}
+                    </span>
+                </div>
+				
+			</li>
+		<!--{/loop}-->
+	</ul>
+    <div class="blank10"></div>
+	<div class="pagination">
+		<!--{subtemplate inc/pages}-->
+	</div>
+</div>
+</form>
+	<div id="page"></div>
+</div>
+<!--end comment-->
+</div>
+
+    <div id="rightcolumn">
+        <!--{if $current_type == 'bao'}-->
+			<div class="addfollow cf">
+				<h2 class="f14 black">{$user_show_name['short']}最被喜欢的宝贝</h2>
+				<ul class="follow_list cf">
+                	<!--{eval $idx = 1;}-->
+					<!--{loop $best_goods_share $goods_share}-->
+					<li {if $idx % 3 == 0} style="margin:0px;"{/if}><a target="_blank" href="{$goods_share['url']}"><img src="{getimg $goods_share['img'] 60 60}" width="60" height="60"></a></li>
+                    <!--{eval $idx++;}-->
+					<!--{/loop}-->
+				</ul> 
+			</div>
+			{$shop_percent_html}
+			<!--{elseif $current_type == 'photo'}-->
+            <!--{if $best_photo_share}-->
+			<div class="addfollow cf">
+				<h2 class="f14 black">{$user_show_name['short']}最被喜欢的照片 </h2>
+				<ul class="follow_list cf">
+                	<!--{eval $idx = 1;}-->
+					<!--{loop $best_photo_share $photo_share}-->
+					<li {if $idx % 3 == 0} style="margin:0px;"{/if}><a href="{$photo_share['url']}"><img src="{getimg $photo_share['img'] 60 60}" width="60" height="60"></a></li>
+                    <!--{eval $idx++;}-->
+					<!--{/loop}-->
+				</ul>
+			</div>
+            <!--{/if}-->
+            
+            <!--{if $user_fav_photo}-->
+			<div class="addfollow cf">
+				<h2 class="f14 black">{$user_show_name['short']}喜欢的照片</h2>
+				<ul class="follow_list cf">
+                	<!--{eval $idx = 1;}-->
+					<!--{loop $user_fav_photo $photo_share}-->
+					<li {if $idx % 3 == 0} style="margin:0px;"{/if}><a target="_blank" href="{$photo_share['url']}"><img src="{getimg $photo_share['img'] 60 60}" width="60" height="60"></a></li>
+                    <!--{eval $idx++;}-->
+					<!--{/loop}-->
+				</ul>
+			</div>
+            <!--{/if}-->
+			<!--{else}-->
+			
+			<!--{/if}-->
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+function UpdateUserFollow(obj,result)
+{
+	if(result.status == 1)
+	{
+		$(obj).before('<img class="fo_ok" src="./tpl/images/add_ok_03.png">');
+		$(obj).remove();
+	}
+}
+
+jQuery(function(){
+	var _default1 = $('#fav1').find('.number').text();
+	
+	
+	$('#fav1').hover(function(){
+		$(this).addClass('hover').find('em').text('喜欢').parent().find('.number').text('+1');
+	},function(){
+		$(this).removeClass('hover').find('em').text('').parent().find('.number').text(_default1);	
+	});
+	
+	$('#fav2').hover(function(){
+		$(this).addClass('hover').find('em').text('转发');
+	},function(){
+		$(this).removeClass('hover').find('em').text('');	
+	});
+	
+	$('#jquery-favfor .fov').hover(function(){
+		$(this).addClass('hover2').find('em').text('转发');
+	},function(){
+		$(this).removeClass('hover2').find('em').text('');
+	});
+	if ($('#commentta').val() != '' && $('#commentta').val() != '说点什么吧……') {
+        $('#commentta').css({
+            'height': '88px'
+        });
+        $('#commentta').addClass('commentta');
+		$('#divconfirm').show();
+        $('#divconfirm a').removeClass('unconfirm-btn').addClass('confirm-btn');
+        if ($('#commentta').val().length < 141) {
+            $('#divconfirm em').text($('#commentta').val().length).removeClass('overnum');
+            $(this).removeClass('commenttaover')
+        } else {
+            $('#divconfirm em').text($('#commentta').val().length - 140).addClass('overnum');
+            $('commentta').addClass('commenttaover')
+        }
+    }
+	$('#commentta').focus(function() {
+        if ($(this).val() == '说点什么吧……' || $(this).val() == '') {
+            $(this).val('').addClass('commentta');
+        }
+        $(this).animate({
+            height: "88px"
+        },
+        {
+            queue: false,
+            duration: 100
+        });
+        $('#divconfirm').slideDown();
+        $(this).keyup(function() {
+            var index = ($.trim($(this).val())).length;
+            if (index > 0) {
+                $('#divconfirm a').removeClass('unconfirm-btn').addClass('confirm-btn');
+            } else {
+                $('#divconfirm a').removeClass('confirm-btn').addClass('unconfirm-btn');
+                $("#replyCommentId").val(0);
+            }
+            if (index < 141) {
+                $('#divconfirm em').text(index).removeClass('overnum');
+                $(this).removeClass('commenttaover')
+            } else {
+                $('#divconfirm em').text(index - 140).addClass('overnum');
+                var _this = $(this);
+                if (timers !== null) {
+                    return;
+                }
+                timers = setTimeout(function() {
+                    timers = null;
+                    _this.addClass('commenttaover').animate({
+                        opacity: '0.25'
+                    },
+                    50).animate({
+                        opacity: '1'
+                    },
+                    50).animate({
+                        opacity: '0.25'
+                    },
+                    50).animate({
+                        opacity: '1'
+                    },
+                    50);
+                },
+                200);
+            }
+        })
+    }).focusout(function() {
+        if ($('#commentta').val().length == 0) {
+            $("#replyCommentId").val(0);
+            $(this).val('说点什么吧……').removeClass('commentta');
+            $(this).animate({
+                height: "52px"
+            },
+            {
+                queue: false,
+                duration: 100
+            }) 
+			$('#divconfirm').slideUp();
+            $('#divconfirm a').removeClass('confirm-btn').addClass('unconfirm-btn');
+        }
+    }); 
+	$('#jquery-addnumber  a em').mouseover(function() {
+        $('#getnumber .minutes em').text('+' + $(this).text())
+    })
+
+
+	CommentInit();
+});
+
+function CommentInit()
+{
+	$(".pagination a").click(function(){
+		var page = $(this).attr('page');
+		$.Get_Share_Comment("{$share_detail['share_id']}",page,'#SHARE_COMMENT_LIST_BOX',CommentInit);
+		return false;
+	});
+}
+</script>
+<!--{template inc/footer}-->

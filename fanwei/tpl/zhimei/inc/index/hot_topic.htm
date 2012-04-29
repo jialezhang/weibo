@@ -1,0 +1,26 @@
+<div class="fr box hot_topic">
+	<div class="box_head">
+		<strong>{lang uu_hot_topic}</strong>
+		<a href="{u club/index}" class="fr">{lang more}>></a>
+	</div>
+	<div class="img_box">
+		<!--{if !empty($img_topic)}-->
+		<a href="{$img_topic['url']}" target="_blank" class="topic_img"><img alt="{$img_topic['title']}" height="70" original="{getimg $img_topic['imgs'][0]['img'] 90 70 1}" src="./tpl/images/lazyload.gif" class="lazyload"></a>
+		<div class="inf">
+			<a href="{$img_topic['url']}" target="_blank" class="topic_title">{cutstr $img_topic['title'] 40}</a>
+			<p class="sms">{$img_topic['content']}</p>
+			<p class="time_post">{$img_topic['time']}&nbsp;&nbsp;<span>{$img_topic['post_count']}</span>{lang post}</p>
+		</div>
+		<!--{/if}-->
+	</div>
+	<div class="list_box">
+		<ul>
+			<!--{loop $hot_topics $topic}-->
+			<li>
+				<a href="{$topic['url']}" target="_blank" title="{$topic['title']}" class="timg"><img alt="{$topic['title']}" height="77" original="{getimg $topic['imgs'][0]['img'] 100 100}" height="80" src="./tpl/images/lazyload.gif" class="lazyload"></a>
+				<!--{getuser $topic['uid'] 0 '' 'tuser'}-->
+			</li>
+			<!--{/loop}-->
+		</ul>
+	</div>
+</div>

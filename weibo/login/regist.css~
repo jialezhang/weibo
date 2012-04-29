@@ -1,0 +1,29 @@
+body{
+	background-image:url('regist.png');
+	background-position:center;}
+
+#main{
+	margin-top:100px;
+	margin-left:500px;
+	margin-right:450px;
+	background-image:url('regist1.jpg');}
+	
+#email{
+	margin-left:100px; }
+	
+#pass{
+	margin-left:100px; }
+	
+#truename{
+	margin-left: 100px;}
+	
+#cpass{
+	margin-left:100px; }
+	
+#age{
+	margin-left:64px;}
+	
+#gender{
+	margin-left: 100px;}
+	
+#
