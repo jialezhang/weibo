@@ -1,2 +1,2 @@
 #encoding:gbk
-puts "hi，all"
+puts "hi，allsdasdads"
